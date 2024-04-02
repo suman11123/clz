@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Pre-Registration Form</title>
+
+    <meta property="og:title" content="Admission Form" />
+    <meta name="format-detection" content="telephone=no" />
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <script src="https://unpkg.com/compressorjs@1.0.6/dist/compressor.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
+    <style>
+      .admission-form {
+        padding: 40px 20px;
+        font-family: Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 100%;
+        max-width: 980px;
+        margin: 0 auto;
+        width: 95%;
+      }
+
+      .preview {
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+
+      .form-header {
+        width: 100%;
+        background: none;
+        padding: 5px 0;
+      }
+
+      .form-header img {
+        display: block;
+        margin: 0 auto;
+        width: 200px;
+        height: auto;
+      }
+
+      .form-group {
+        width: 100%;
+      }
+
+      .input-true {
+        outline: none !important;
+        border: 2px solid #e8e8ea;
+        width: 100%;
+        height: 35px;
+        border-radius: 5px;
+        padding: 0 10px;
+        background-color: #f8f9fb;
+        transition: all 0.3s ease-in;
+      }
+
+      .input-true.parsley-error {
+        border-color: #ff7e7e !important;
+      }
+
+      .parsley-errors-list li {
+        color: #ff7e7e;
+        margin-top: 4px;
+      }
+
+      .input-true:focus {
+        box-shadow: inset 0px 1px 8px #ddd !important;
+        border-color: rgba(141, 157, 204, 0.57);
+      }
+
+      .input-true.submit {
+        transition: all 0.2s linear;
+        background: #009aca;
+        color: #fff;
+        text-align: center;
+        align-items: center;
+        margin-bottom: 140px;
+        width: 100px;
+        font-weight: bold;
+        margin: 0 auto;
+        display: block;
+        margin-top: 50px;
+      }
+
+      .input-true.submit:hover {
+        color: #fff;
+      }
+
+      .admission-form form {
+        margin-top: 50px;
+      }
+
+      .admission-form ul {
+        padding: 0;
+        margin-bottom: 0;
+        list-style: none;
+      }
+
+      .admission-form .form-group-header {
+        font-size: 1.1em;
+        font-weight: bold;
+        color: #545454;
+        margin-bottom: 15px;
+        line-height: 1.4em;
+      }
+
+      .admission-form label {
+        font-size: 1em;
+        font-weight: normal;
+        color: #777;
+        position: relative;
+      }
+
+      .admission-form .form-group li {
+        margin-bottom: 15px;
+      }
+
+      .req-label:after {
+        content: "*";
+        color: red;
+        display: inline-block;
+        margin: 3px 0 0 4px;
+      }
+
+      .group-devider > div {
+        border-right: 1px solid #ddd;
+        padding-right: 40px;
+      }
+
+      .group-devider > div:last-child {
+        border: none;
+        padding-right: 0;
+        padding-left: 40px;
+      }
+
+      .group-devider-ul li {
+        border-right: 1px solid #ddd;
+      }
+
+      .group-devider-ul li:last-child {
+        border-right: none;
+      }
+
+      .add-more-row {
+        background: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+        display: block;
+        margin-left: auto;
+      }
+
+      .add-more-row svg {
+        width: 30px;
+        height: 30px;
+        fill: #777;
+      }
+
+      .add-more-row svg path {
+        fill: #777;
+      }
+
+      .add-more-row:hover svg path {
+        fill: #333;
+      }
+
+      .inline-block {
+        display: inline-block;
+      }
+
+      .form-group-header.space-right {
+        margin-right: 20px;
+      }
+
+      label.space-right {
+        margin-right: 20px;
+      }
+
+      label.space-left {
+        margin-left: 4px;
+      }
+
+      .flex {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .align-items-center {
+        align-items: center;
+      }
+
+      textarea.input-true {
+        max-width: 100%;
+        min-width: 100%;
+        height: 70px;
+      }
+
+      .styled-checkbox {
+        position: absolute;
+        opacity: 0;
+      }
+
+      .styled-checkbox + label {
+        position: relative;
+        cursor: pointer;
+        padding: 0;
+      }
+
+      .styled-checkbox + label:before {
+        content: "";
+        margin-right: 10px;
+        display: inline-block;
+        vertical-align: text-top;
+        width: 20px;
+        height: 20px;
+        background: #f8f9fb;
+        border: 2px solid #ddd;
+      }
+      .styled-checkbox:hover + label:before {
+        background: #1c1855;
+      }
+      .styled-checkbox:checked + label:before {
+        background: #1c1855;
+        border: none;
+      }
+      .styled-checkbox:disabled + label {
+        color: #b8b8b8;
+        cursor: auto;
+      }
+
+      .styled-checkbox:disabled + label:before {
+        box-shadow: none;
+        background: #ddd;
+      }
+
+      .styled-checkbox:checked + label:after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 9px;
+        background: white;
+        width: 2px;
+        height: 2px;
+        box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white,
+          4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+      }
+
+      .parsley-error input[type="radio"] + label:before,
+      .parsley-error input[type="checkbox"] + label:before {
+        border-color: #ff7e7e;
+      }
+
+      .checkbox-err .parsley-errors-list {
+        display: none;
+      }
+
+      @media (max-width: 767px) {
+        .group-devider > div {
+          border: none;
+          padding-left: 15px !important;
+          padding-right: 15px !important;
+        }
+
+        .admission-form {
+          padding-left: 3%;
+          padding-right: 3%;
+        }
+      }
+
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      .font-bold {
+        font-weight: bold;
+      }
+
+      .w-full {
+        width: 100%;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .m-0 {
+        margin: 0;
+      }
+
+      .mb-1 {
+        margin-bottom: 4px;
+      }
+
+      .underline {
+        text-decoration: underline;
+      }
+
+      .px-1 {
+        padding-left: 4px;
+        padding-left: 4px;
+      }
+
+      .mt-1 {
+        margin-top: 4px;
+      }
+      .text-main {
+        text-align: center;
+        color: #009aca;
+      }
+      .school-name hr {
+        width: auto;
+        border: 0;
+        background-color: #d73438;
+        height: 2px;
+        margin-bottom: 33px;
+      }
+    </style>
+    <script src="https://ingrails.com/school/admission_assets/js/parsley.min.js"></script>
+    <script src="https://ingrails.com/school/admission_assets/js/datepicker.min.js"></script>
+    <script src="https://ingrails.com/school/admission_assets/js/nepali.datepicker.v2.2.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://ingrails.com/school/admission_assets/css/nepali.datepicker.v2.2.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://ingrails.com/school/admission_assets/css/datepicker.min.css"
+    />
+  </head>
+
+  <body>
+    <section class="admission-form">
+      <header class="form-header">
+        <div class="school-name">
+          <h1 class="text-main">
+            Oxford College of Engineering and Management
+          </h1>
+          <hr />
+        </div>
+        <p class="text-center">Gaindakot-2 Nawalpur, Nepal</p>
+        <h2 class="text-center">Pre-Registration Form</h2>
+      </header>
+      <form
+        autocomplete="off"
+        action="https://ingrails.com/school/admission/submitForm"
+        method="POST"
+        id="admission-form"
+      >
+        <input
+          type="hidden"
+          name="school"
+          value="WkY3aHdVZFJwdml5eklGM2M4TU0zdz09"
+        />
+        <section class="form-group">
+          <h4 class="form-group-header">Student's Name (IN BLOCK LETTERS)</h4>
+          <ul class="row">
+            <li class="col-md-4 col-sm-4">
+              <label for="" class="req-label">First Name</label>
+              <input
+                type="text"
+                name="first_name"
+                class="text-uppercase input-true"
+                required
+              />
+            </li>
+            <li class="col-md-4 col-sm-4">
+              <label for="">Middle Name</label>
+              <input
+                type="text"
+                name="middle_name"
+                class="input-true text-uppercase"
+              />
+            </li>
+            <li class="col-md-4 col-sm-4">
+              <label for="" class="req-label">Last Name</label>
+              <input
+                type="text"
+                name="last_name"
+                class="input-true text-uppercase"
+                required
+              />
+            </li>
+          </ul>
+        </section>
+        <section class="form-group">
+          <h4 class="form-group-header">Date of Birth</h4>
+          <ul class="row">
+            <li class="col-md-4 col-sm-4">
+              <label for="">Nepali Date (BS)</label>
+              <input
+                type="text"
+                name="dob_bs"
+                id="datepicker-nepali"
+                data-toggle="datepicker-nepali"
+                class="input-true"
+              />
+            </li>
+            <li class="col-md-4 col-sm-4">
+              <label for="">English Date (AD)</label>
+              <input
+                type="text"
+                data-toggle="datepicker-english"
+                id="datepicker-english"
+                placeholder="YYYY-MM-DD"
+                data-date-format="YYYY-MM-DD"
+                data-parsley-mindate="1994-01-22"
+                data-parsley-maxdate="2024-01-22"
+                name="dob_ad"
+                class="input-true"
+              />
+            </li>
+            <li class="col-md-4 col-sm-4 checkbox-err">
+              <label for="" class="req-label"> Gender </label>
+              <div style="margin-top: 5px">
+                <input
+                  type="radio"
+                  value="Male"
+                  name="gender"
+                  id="male"
+                  class="styled-checkbox"
+                  data-parsley-multiple="gender"
+                  required
+                />
+                <label for="male">Male</label>
+                &nbsp;&nbsp;&nbsp;
+                <input
+                  type="radio"
+                  value="Female"
+                  name="gender"
+                  id="female"
+                  class="styled-checkbox"
+                />
+                <label for="female">Female</label>
+              </div>
+            </li>
+          </ul>
+        </section>
+        <section class="form-group">
+          <ul class="row">
+            <li class="col-md-4 col-sm-4">
+              <label for="" class="req-label">Program Name</label>
+              <select name="class" id="" class="input-true" required>
+                <option value="">Select Program</option>
+                <option value="BBA">BBA</option>
+                <option value="BCA">BCA</option>
+                <option value="BCA">BE-CIVIL</option>
+                <option value="BCA">BE-Ele&Elx</option>
+                <option value="BCA">BE-Computer</option>
+              </select>
+            </li>
+            <li class="col-md-4 col-sm-12">
+              <label class="req-label">Nationality</label>
+              <input
+                type="text"
+                name="nationality"
+                required
+                class="input-true"
+              />
+            </li>
+            <li class="col-md-4 col-sm-4">
+              <label for="" class="req-label">Contact Number One</label>
+              <input
+                type="text"
+                name="phone"
+                class="input-true text-uppercase"
+                required
+              />
+            </li>
+            <li class="col-md-4 col-sm-4">
+              <label for="" class="req-label">Contact Number Two</label>
+              <input
+                type="text"
+                name="sms_mobile_no"
+                class="input-true text-uppercase"
+                required
+              />
+            </li>
+          </ul>
+        </section>
+
+        <section class="form-group">
+          <h4 class="form-group-header">Permanent Address</h4>
+          <ul class="row">
+            <li class="col-md-4 col-sm-4">
+              <label for="">Address</label>
+              <input
+                type="text"
+                name="address[permanent][address]"
+                class="input-true text-uppercase"
+              />
+            </li>
+            <li class="col-md-4 col-sm-4">
+              <label for="" class="req-label">Country</label>
+              <input
+                type="text"
+                name="address[permanent][country]"
+                class="input-true text-uppercase"
+                required
+              />
+            </li>
+            <li class="col-md-4 col-sm-4">
+              <label for="" class="req-label">Province</label>
+              <input
+                type="text"
+                name="address[permanent][province]"
+                class="input-true text-uppercase"
+                required
+              />
+            </li>
+            <li class="col-md-4 col-sm-4">
+              <label for="" class="req-label">District</label>
+              <input
+                type="text"
+                name="address[permanent][district]"
+                class="input-true text-uppercase"
+                required
+              />
+            </li>
+          </ul>
+        </section>
+
+        <section class="form-group">
+          <h4 class="form-group-header">Local Address</h4>
+          <ul class="row">
+            <li class="col-md-4 col-sm-4">
+              <label for="">Address</label>
+              <input
+                type="text"
+                name="address[temporary][address]"
+                class="input-true text-uppercase"
+              />
+            </li>
+            <li class="col-md-4 col-sm-4">
+              <label for="" class="req-label">Country</label>
+              <input
+                type="text"
+                name="address[temporary][country]"
+                class="input-true text-uppercase"
+                required
+              />
+            </li>
+            <li class="col-md-4 col-sm-4">
+              <label for="" class="req-label">Province</label>
+              <input
+                type="text"
+                name="address[temporary][province]"
+                class="input-true text-uppercase"
+                required
+              />
+            </li>
+            <li class="col-md-4 col-sm-4">
+              <label for="" class="req-label">District</label>
+              <input
+                type="text"
+                name="address[temporary][district]"
+                class="input-true text-uppercase"
+                required
+              />
+            </li>
+          </ul>
+        </section>
+
+        <section class="form-group">
+          <h4 class="form-group-header">Academic Background</h4>
+
+          <table class="w-full">
+            <thead>
+              <tr>
+                <th>Name(s) of School(s) Attended</th>
+                <th>GPA/Percentage</th>
+                <th>End Year</th>
+                <th>Board</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 2px">
+                  <input
+                    type="text"
+                    name="last_school[0][name]"
+                    class="input-true w-full"
+                  />
+                </td>
+                <td style="padding: 2px">
+                  <input
+                    type="text"
+                    name="last_school[0][see_gpa]"
+                    class="input-true w-full"
+                  />
+                </td>
+                <!-- <td style="padding: 2px;">
+                                        <input type="text" name="last_school[0][start_year]" class="input-true w-full">
+                                    </td> -->
+                <td style="padding: 2px">
+                  <input
+                    type="text"
+                    name="last_school[0][end_year]"
+                    class="input-true w-full"
+                  />
+                </td>
+                <td style="padding: 2px">
+                  <input
+                    type="text"
+                    name="last_school[0][board]"
+                    class="input-true w-full"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 2px">
+                  <input
+                    type="text"
+                    name="last_school[1][name]"
+                    class="input-true w-full"
+                  />
+                </td>
+                <td style="padding: 2px">
+                  <input
+                    type="text"
+                    name="last_school[1][see_gpa]"
+                    class="input-true w-full"
+                  />
+                </td>
+                <td style="padding: 2px">
+                  <input
+                    type="text"
+                    name="last_school[1][end_year]"
+                    class="input-true w-full"
+                  />
+                </td>
+                <td style="padding: 2px">
+                  <input
+                    type="text"
+                    name="last_school[1][board]"
+                    class="input-true w-full"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        <section class="form-group">
+          <h4 class="form-group-header">Parents / Guardian's Information</h4>
+          <ul class="row">
+            <li class="col-md-4 col-sm-4">
+              <label for="" class="req-label">Full Name</label>
+              <input
+                type="text"
+                name="guardian_name"
+                class="input-true"
+                required
+              />
+            </li>
+            <li class="col-md-4 col-sm-4">
+              <label for="">Relation</label>
+              <input type="text" name="g_relation" class="input-true" />
+            </li>
+            <li class="col-md-4 col-sm-4">
+              <label for="" class="req-label">Mobile Number</label>
+              <input
+                type="text"
+                name="g_cell"
+                data-parsley-type="number"
+                data-parsley-length="[10, 10]"
+                data-parsley-length-message="This value length is invalid. It should be 10 characters long."
+                class="input-true"
+                required
+              />
+            </li>
+            <li class="col-md-4 col-sm-4">
+              <label for="">Email</label>
+              <input
+                type="email"
+                data-parsley-type="email"
+                name="g_email"
+                class="input-true"
+              />
+            </li>
+            <li class="col-md-4 col-sm-4">
+              <label for=""> Occupation </label>
+              <input type="text" name="g_occupation" class="input-true" />
+            </li>
+          </ul>
+        </section>
+
+        <section class="form-group">
+          <input
+            type="hidden"
+            name="questions[0][question]"
+            value="How did you hear about us ?"
+          />
+          <h4 class="form-group-header">How did you hear about us ?</h4>
+          <div>
+            <input
+              type="radio"
+              value="Social Media"
+              name="questions[0][answer]"
+              id="social_media"
+              class="styled-checkbox"
+              data-parsley-multiple="question"
+            />
+            <label for="social_media">Social Media</label>
+            &nbsp;&nbsp;&nbsp;
+            <input
+              type="radio"
+              value="Friends and Family"
+              name="questions[0][answer]"
+              id="friends_and_family"
+              class="styled-checkbox"
+            />
+            <label for="friends_and_family">Friends and Family</label>
+            &nbsp;&nbsp;&nbsp;
+            <input
+              type="radio"
+              value="Recommendation"
+              name="questions[0][answer]"
+              id="recommendation"
+              class="styled-checkbox"
+            />
+            <label for="recommendation">Recommendation</label>
+            &nbsp;&nbsp;&nbsp;
+            <input
+              type="radio"
+              value="News & Websites"
+              name="questions[0][answer]"
+              id="news_and_websites"
+              class="styled-checkbox"
+            />
+            <label for="news_and_websites">News & Websites</label>
+            &nbsp;&nbsp;&nbsp;
+            <input
+              type="radio"
+              value="Others"
+              name="questions[0][answer]"
+              id="others"
+              class="styled-checkbox"
+            />
+            <label for="others">Others</label>
+          </div>
+          <textarea
+            id="other_answer"
+            style="width: 100%; height: 100px; display: none; margin-top: 5px"
+            name="questions[0][others]"
+          ></textarea>
+        </section>
+
+        <h4 class="form-group-header">Documents</h4>
+        <div class="wrapper">
+          <div class="form-group">
+            <label class="">
+              Grade/Mark Sheet of SEE/Equivalent Certification
+            </label>
+            <input
+              data-setindex="1"
+              data-indexkey="1"
+              data-indexkeyname="Grade/Mark Sheet of SEE/Equivalent Certification"
+              data-resize="1080"
+              style="height: 35px"
+              class="form-control"
+              type="file"
+              onchange="validateSize(this)"
+              accept="image/jpeg,image/gif,image/png,application/pdf"
+              class="col"
+              required
+              name="document_see_marksheet"
+            />
+            <p style="margin: 0 0 15px 0">
+              (Note: Only jpg/jpeg/png/pdf/doc/docx. Max size 3 MB.)
+            </p>
+          </div>
+          <div class="form-group">
+            <label class="">
+              Grade/Mark Sheet of Grade XI/Equivalent Certification
+            </label>
+            <input
+              data-setindex="1"
+              data-indexkey="1"
+              data-indexkeyname="Grade/Mark Sheet of Grade XI/Equivalent Certification"
+              data-resize="1080"
+              style="height: 35px"
+              class="form-control"
+              type="file"
+              onchange="validateSize(this)"
+              accept="image/jpeg,image/gif,image/png,application/pdf"
+              class="col"
+              required
+              name="document_marksheet"
+            />
+            <p style="margin: 0 0 15px 0">
+              (Note: Only jpg/jpeg/png/pdf/doc/docx. Max size 3 MB.)
+            </p>
+          </div>
+          <div class="form-group">
+            <label class=""> Other Certificate (If Available) </label>
+            <input
+              data-setindex="1"
+              data-indexkey="1"
+              data-indexkeyname="Other Certificate (If Available)"
+              data-resize="1080"
+              style="height: 35px"
+              class="form-control"
+              type="file"
+              onchange="validateSize(this)"
+              accept="image/jpeg,image/gif,image/png,application/pdf"
+              class="col"
+              required
+              name="other_document"
+            />
+            <p style="margin: 0 0 15px 0">
+              (Note: Only jpg/jpeg/png/pdf/doc/docx. Max size 3 MB.)
+            </p>
+          </div>
+        </div>
+
+        <section class="form-group" style="display: none">
+          <h4 class="form-group-header">
+            Any particular disease(s)/illness(es) student is suffering from? If
+            yes, please give details.
+          </h4>
+          <ul class="row">
+            <li class="col-md-12">
+              <textarea name="disease_desc" class="input-true"></textarea>
+            </li>
+          </ul>
+        </section>
+
+        <section class="form-group" style="display: none">
+          <h4 class="form-group-header">
+            Does the student have any allergy? Is he/she under any medication?
+            If yes, please give details.
+          </h4>
+          <ul class="row">
+            <li class="col-md-12">
+              <textarea name="allergy_desc" class="input-true"></textarea>
+            </li>
+          </ul>
+        </section>
+        <input type="submit" value="Submit" class="input-true submit" />
+      </form>
+    </section>
+    <script src="https://ingrails.com/school/admin_panel/js/client/axios.js"></script>
+    <script>
+      window.awsVeda = (function () {
+        function isArray(a) {
+          return !!a && a.constructor === Array;
+        }
+
+        function isNumeric(str) {
+          if (typeof str != "string") return false; // we only process strings!
+          return (
+            !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+            !isNaN(parseFloat(str))
+          ); // ...and ensure strings of whitespace fail
+        }
+        var nameWiseFile = {};
+
+        function getFileName(file, parent) {
+          var fName = [];
+          if (parent) {
+            var _input = $(parent).find(`input[name='${file}']`);
+          } else {
+            var _input = $(`input[name='${file}']`);
+          }
+          _input.each(function (index) {
+            var el = $(this);
+            var resize = el.data("resize");
+            var inputFiles = el.prop("files");
+            var requiredIndex = el.data("setindex") == 1;
+            if (inputFiles !== null) {
+              Object.values(inputFiles).forEach(function (_file) {
+                fName.push(_file.name);
+                _file.resize = resize;
+                if (requiredIndex) {
+                  if (el.data("indexfilename") == 1) {
+                    _file.index = _file.name
+                      .split(".")
+                      .slice(0, -1)
+                      .join(".")
+                      .toString();
+                    _file.index_type = "string";
+                  } else if (el.data("indexkey") == 1) {
+                    _file.index = el.data("indexkeyname");
+                    _file.index_type = "string";
+                  } else {
+                    _file.index_type = "number";
+                    _file.index = index;
+                  }
+                }
+                nameWiseFile[_file.name] = _file;
+              });
+            }
+          });
+          return fName;
+        }
+
+        function isImg(filename) {
+          var ext = filename.split(".").pop();
+          console.log(filename, ext);
+          return ext == "jpg" || ext == "png" || ext == "jpeg";
+        }
+
+        function getSignedUrl(
+          FILE,
+          featureName,
+          fileNameData = {},
+          parent = null
+        ) {
+          var formData = new FormData(),
+            fileName = [],
+            binaryFiles = [];
+
+          var promises = [],
+            publicUrl = [];
+
+          if (Object.keys(fileNameData).length !== 0) {
+            console.log("Getting info of file ");
+            var fileName = fileNameData.fileName;
+            nameWiseFile = fileNameData.nameWiseFile;
+            console.log(fileName);
+          } else {
+            var fileName = getFileName(FILE, parent);
+          }
+          if (fileName.length == 0) {
+            return $.Deferred()
+              .resolve()
+              .then(function () {
+                return fileName;
+              });
+          }
+          var url = "https://ingrails.com/school/" + "awsWeb/getSignedUrl";
+
+          var formData = new FormData();
+          formData.append("feature_name", featureName);
+          formData.append("files_name", JSON.stringify(fileName));
+          var request = axios.post(url, formData);
+
+          request
+            .then(function (res) {
+              var response = res.data;
+              if (response.status === "true") {
+                response.message.forEach(function (fileRes) {
+                  var resFile = nameWiseFile[fileRes.file];
+                  if (typeof resFile.index !== "undefined") {
+                    if (
+                      isNumeric(resFile.index) &&
+                      resFile.index_type === "number"
+                    ) {
+                      publicUrl[resFile.index] = fileRes.public_url;
+                    } else {
+                      publicUrl.push({
+                        index: resFile.index,
+                        url: fileRes.public_url,
+                      });
+                    }
+                  } else {
+                    publicUrl.push(fileRes.public_url);
+                  }
+                  console.log("public url", publicUrl);
+                  if (resFile.resize && isImg(resFile.name)) {
+                    promises.push(
+                      new Promise(function (resolve) {
+                        new Compressor(resFile, {
+                          quality: 0.8,
+                          maxWidth: parseInt(resFile.resize),
+                          success(result) {
+                            var uploadReq = axios
+                              .put(fileRes.put_url, result, {
+                                headers: {
+                                  "Content-Type": result.type,
+                                  "Access-Control-Allow-Origin": "*",
+                                },
+                              })
+                              .then(function (data) {
+                                resolve();
+                                return fileRes.public_url;
+                              });
+                            promises.push(uploadReq);
+                          },
+                          error(err) {
+                            resolve();
+                            console.log(err.message);
+                          },
+                        });
+                      })
+                    );
+                  } else {
+                    var uploadReq = axios
+                      .put(fileRes.put_url, resFile, {
+                        headers: {
+                          "Content-Type": resFile.type,
+                          "Access-Control-Allow-Origin": "*",
+                        },
+                      })
+                      .then(function (data) {
+                        return fileRes.public_url;
+                      });
+                    promises.push(uploadReq);
+                  }
+                });
+                console.log("return public url", publicUrl);
+                return publicUrl;
+              }
+              return null;
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+          return request.then(function (data) {
+            return Promise.all(promises).then(function (results) {
+              return publicUrl;
+            });
+          });
+        }
+        return {
+          getSignedUrl: getSignedUrl,
+        };
+      })();
+    </script>
+    <script type="text/javascript">
+      function validateSize(file) {
+        var FileSize = file.files[0].size / 1024 / 1024; // in MB
+        if (FileSize > 3) {
+          alert("File size exceeds 3 MB");
+          if ($(file).attr("name") == "student_image") {
+            $(".preview").hide().css("backgroundImage", "");
+          }
+          $(file).val(""); //for clearing with Jquery
+        } else {
+        }
+      }
+      showVegNonVeg = document.getElementById("veg-nonveg");
+      isLunchYes = document.getElementById("lunch_yes");
+
+      function toggleVegNonVeg() {
+        if ($("#veg-nonveg").length) {
+          if (isLunchYes.checked == true) {
+            showVegNonVeg.style.display = "block";
+          } else {
+            showVegNonVeg.style.display = "none";
+          }
+        }
+      }
+
+      function togglePaymentMethod() {
+        const el = event.target;
+        const bankDetailsEl = document.querySelector(el.dataset.target);
+
+        console.log(el, bankDetailsEl);
+
+        if (el.value == 1) {
+          // pay via college
+          bankDetailsEl.classList.add("hidden");
+          document.querySelector(
+            "input[name=payment_voucher]"
+          ).required = false;
+        } else {
+          // bank transfer
+          document.querySelector("input[name=payment_voucher]").required = true;
+          bankDetailsEl.classList.remove("hidden");
+        }
+      }
+
+      isTransportYes = document.getElementById("transport_yes");
+      busTransportDiv = document.getElementById("busTransport");
+      pickupDiv = document.getElementById("pickupDiv");
+
+      function toggleBusTransport() {
+        if (isTransportYes.checked == true) {
+          busTransportDiv.style.display = "block";
+          pickupDiv.style.display = "block";
+        } else {
+          busTransportDiv.style.display = "none";
+          pickupDiv.style.display = "none";
+        }
+      }
+      $(function () {
+        var form = {
+          count: 1,
+          englisthDateSetting: {
+            format: "yyyy-mm-dd",
+            autoHide: true,
+            endDate: "2024-01-22",
+          },
+          nepaliDateSetting: {
+            ndpEnglishInput: "datepicker-english",
+          },
+          addNewBroSisInfo: function (count) {
+            return '<ul class="row default-more-row-component " id="bsr-${count}"><li class="col-md-4 col-sm-4"><label for="" class="req-label">Full Name</label><input type="text" name="relative[${count}][name]" class="input-true" required> </li> <li class="col-md-4 col-sm-4"> <label for="" class="req-label">Grade</label> <input type="text" name="relative[${count}][grade]" class="input-true" required> </li> <li class="col-md-4 col-sm-4"> <label for="" class="req-label">School</label> <input type="text" name="relative[${count}][school]" class="input-true" required> </li> </ul>';
+          },
+          createNewInputRow: function () {
+            var self = this;
+            self.count++;
+            console.log(self.count);
+            if (self.count < 5) {
+              $(".name-other-bro-sis")
+                .find(".new-row")
+                .append(self.addNewBroSisInfo(self.count));
+            } else {
+              console.log("Limit to 5 row");
+            }
+          },
+          convertToNepaliDate: function (from, to) {
+            $(to).val(AD2BS($(from).val()));
+          },
+        };
+
+        function readURL(input) {
+          console.log(input);
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              $(".preview")
+                .show()
+                .css("backgroundImage", `url(${e.target.result})`);
+            };
+
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+          }
+        }
+
+        $("#student_image").change(function () {
+          readURL(this);
+        });
+
+        $('input[type=radio][name="questions[0][answer]"]').change(function () {
+          if (this.value == "Others") {
+            $("#other_answer").show();
+          } else {
+            $("#other_answer").val("");
+            $("#other_answer").hide();
+          }
+        });
+
+        $(".add-more-row").on("click", form.createNewInputRow.bind(form));
+        //validation
+        $("#admission-form").on("submit", function (e) {
+          e.preventDefault();
+        });
+        $("#admission-form")
+          .parsley()
+          .on("field:validated", function () {
+            var ok = $(".parsley-error").length === 0;
+            $(".bs-callout-info").toggleClass("hidden", !ok);
+            $(".bs-callout-warning").toggleClass("hidden", ok);
+          })
+          .on("form:submit", function (e) {
+            $(".submit").prop("disabled", true).val("Submitting...");
+            var formObj = $("#admission-form");
+            var formData = new FormData(formObj[0]);
+            var formURL = formObj.attr("action");
+
+            var promises = [];
+            var request = window.awsVeda
+              .getSignedUrl("student_image", "admission")
+              .then(function (publicUrl) {
+                formData.append("student_image", JSON.stringify(publicUrl));
+                return true;
+              });
+            var documents = [];
+            if (document.getElementById("payment_voucher").files.length != 0) {
+              var request = window.awsVeda
+                .getSignedUrl("payment_voucher", "admission")
+                .then(function (publicUrl) {
+                  documents.push(publicUrl[0]);
+                  return true;
+                });
+            }
+            promises.push(request);
+            // var documents = [];
+            if ($("input[name=document_see_marksheet]").val() != "") {
+              var request0 = window.awsVeda
+                .getSignedUrl("document_see_marksheet", "admission")
+                .then(function (publicUrl) {
+                  documents.push(publicUrl[0]);
+                  return true;
+                });
+              promises.push(request0);
+            }
+            if ($("input[name=document_marksheet]").val() != "") {
+              var request10 = window.awsVeda
+                .getSignedUrl("document_marksheet", "admission")
+                .then(function (publicUrl) {
+                  documents.push(publicUrl[0]);
+                  return true;
+                });
+              promises.push(request10);
+            }
+            if ($("input[name=other_document]").val() != "") {
+              var request20 = window.awsVeda
+                .getSignedUrl("other_document", "admission")
+                .then(function (publicUrl) {
+                  documents.push(publicUrl[0]);
+                  return true;
+                });
+              promises.push(request20);
+            }
+            Promise.all(promises).then(function (publicUrl) {
+              // console.log("documents", typeof documents, documents)
+              formData.append("documents", JSON.stringify(documents));
+              $.ajax({
+                url: formURL,
+                type: "POST",
+                data: formData,
+                mimeType: "multipart/form-data",
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (data, textStatus, jqXHR) {
+                  $(".submit").prop("disabled", false).val("Submit");
+                  var res = JSON.parse(data);
+                  console.log(res);
+                  if (res.status === true) {
+                    window.location.href = res.redirect;
+                  } else {
+                    alert(res.message);
+                  }
+                },
+              });
+            });
+
+            return false;
+          });
+        //date picker
+        var englishDatePicker = $("#datepicker-english"),
+          nepaliDatePicker = $("#datepicker-nepali");
+
+        englishDatePicker.datepicker(form.englisthDateSetting);
+        nepaliDatePicker.nepaliDatePicker(form.nepaliDateSetting);
+        nepaliDatePicker.on("keyup", function () {
+          $(this).trigger("change");
+        });
+
+        englishDatePicker.on("change", function (e) {
+          if ($(this).val()) {
+            form.convertToNepaliDate(e.target, nepaliDatePicker);
+          } else {
+            nepaliDatePicker.val("").trigger("change");
+          }
+        });
+        englishDatePicker.on("keyup", function (e) {
+          if ($(this).val()) {
+            form.convertToNepaliDate(e.target, nepaliDatePicker);
+          } else {
+            nepaliDatePicker.val("").trigger("change");
+          }
+        });
+        var pickup = $(".pickup");
+        $("input[name=bus]").on("change", function (e) {
+          if (e.target.value == 1) {
+            pickup.show();
+          } else {
+            pickup.hide().find("input").val("");
+          }
+        });
+
+        $(document).ajaxComplete(function (e, xhr, settings) {
+          if (xhr.status === 302) {
+            //check for location header and redirect...
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

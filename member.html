@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Board of Directors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lemon&family=Noto+Serif&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    * {
+      font-family: "Lemon", serif;
+      font-family: "Noto Serif", serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .title h1 {
+      margin-top: 100px;
+      color: #009aca;
+      font-size: 35px;
+    }
+    .title hr {
+      margin-top: 10px;
+      width: 33%;
+      border: 0;
+      background-color: #d73438;
+      height: 2px;
+      margin-bottom: 20px;
+    }
+    .title p {
+      font-size: 20px;
+      text-align: justify;
+    }
+    body {
+      justify-content: center;
+      align-items: center;
+      margin-left: 150px;
+      margin-right: 150px;
+    }
+    .wrapper .card_Container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 40px 0;
+    }
+
+    .card_Container .card {
+      position: relative;
+      width: 250px;
+      height: 350px;
+      margin: 50px;
+      overflow: hidden;
+      border-radius: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .card .imbBx,
+    .imbBx img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+    .card .content {
+      font-size: 15px;
+      position: absolute;
+      bottom: -160px;
+      width: 100%;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 -10px 10px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0 0 15px 15px;
+      transition: bottom 0.5s;
+      transition-delay: 0.65s;
+      color: white;
+    }
+    .card .content {
+      bottom: 0;
+      transition-delay: 0s;
+      cursor: pointer;
+    }
+    .card .content {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+  <body>
+    <div class="wrapper">
+      <div class="title">
+        <h1>Board Member of Oxford</h1>
+        <hr />
+        <p>
+          The Board of Directors at the college plays a crucial role in shaping
+          and executing the institution's vision and mission. Mr. Narayan
+          Bhandari, serving as the Chairman, provides strategic leadership and
+          oversees the overall governance of the college. Prof. Er. Hari
+          Bhandari, in the position of Principal, is responsible for the
+          academic leadership, ensuring the delivery of a world-class education
+          and a real-life learning environment. Bhim Bhandari, as a Member,
+          contributes to decision-making processes and brings valuable insights
+          to the board. Ram Prasad Chapagain, in the role of Adviser, offers
+          guidance based on his expertise, contributing to the college's
+          commitment to providing need-based education and promoting social
+          awareness programs. Er. Shankar Lamichhane, representing the PU
+          (Pokhara University) as a representative, facilitates communication
+          and collaboration between the college and the university. Together,
+          these individuals work collaboratively to fulfill the college's
+          objectives, maintain high educational standards, and produce
+          technically proficient and morally grounded graduates ready for the
+          global competitive landscape.
+        </p>
+      </div>
+
+      <div class="card_Container">
+        <div class="card">
+          <div class="imbBx">
+            <img src="image/bod/Narayan.jpg" alt="" srcset="" />
+          </div>
+
+          <div class="content">
+            <h3>Mr. Narayan Bhandari<br /><span>Chairman</span></h3>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="imbBx">
+            <img src="image/bod/hari.png" alt="" srcset="" />
+          </div>
+
+          <div class="content">
+            <h3>Prof. Er. Hari Bhandari<br /><span>Principal</span></h3>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="imbBx">
+            <img src="image/bod/bhim.jpg" alt="" srcset="" />
+          </div>
+          <div class="content">
+            <h3>Bhim Bhandari<br /><span>Member</span></h3>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="imbBx">
+            <img src="image/bod/Ram Parasd.jpg" alt="" srcset="" />
+          </div>
+
+          <div class="content">
+            <h3>Ram Prasad Chapagain<br /><span>Adviser</span></h3>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="imbBx">
+            <img src="image/bod/shankar.jpg" alt="" srcset="" />
+          </div>
+
+          <div class="content">
+            <h3>Er. Shankar Lamichhane<br /><span>PU Representative</span></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
